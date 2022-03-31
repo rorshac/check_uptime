@@ -22,7 +22,6 @@
       debug:
        #var: ansible_uptime_seconds
         msg: "{{ansible_hostname}}: Uptime: {{(ansible_uptime_seconds/86400)| round(2,'common')}} days"
-        no_log: true
 #      when: ansible_uptime_seconds > 2419200
 
 #    - name: Ouput Uptime to file
