@@ -5,18 +5,18 @@
 ##  become_user: root
   vars:
     output_file: /tmp/uptime_check.txt
-    to_address:
-    from_address:
+#    to_address:
+#    from_address:
     
   hosts: all
   tasks:
 
-    - name: Create clean file
-      copy:
-        dest: "{{ output_file }}"
-        content: 'Server Uptime Report'
-      run_once: yes
-      delegate_to: localhost
+#    - name: Create clean file
+#      copy:
+#        dest: "{{ output_file }}"
+#        content: 'Server Uptime Report'
+#      run_once: yes
+#      delegate_to: localhost
 
     - name: Checking Server uptime!
       debug:
@@ -24,23 +24,23 @@
         msg: "{{ansible_hostname}}: Uptime: {{(ansible_uptime_seconds/86400)| round(2,'common')}} days"
 #      when: ansible_uptime_seconds > 2419200
 
-    - name: Ouput Uptime to file
-      lineinfile:
-        path: "{{ output_file }}"
-        line: "{{ansible_hostname}}: Uptime: {{(ansible_uptime_seconds/86400)| round(2,'common')}} days"
+#    - name: Ouput Uptime to file
+#      lineinfile:
+#        path: "{{ output_file }}"
+#        line: "{{ansible_hostname}}: Uptime: {{(ansible_uptime_seconds/86400)| round(2,'common')}} days"
       # Tries to prevent concurrent writes.
       # throttle: 1
-      delegate_to: localhost
+#      delegate_to: localhost
 
-    - name: Ouput Uptime to email
-      mail:
-        host: hostsmtp.northwestern.edu
-        to: "{{ to_address }}"
-        from: "{{ from_address }}"
-        subject: Automated Server Uptime Report
-        body: "{{ lookup('file', '{{output_file}}') }}"
-      run_once: yes
-      delegate_to: localhost
+#    - name: Ouput Uptime to email
+#      mail:
+#        host: hostsmtp.northwestern.edu
+#        to: "{{ to_address }}"
+#        from: "{{ from_address }}"
+#        subject: Automated Server Uptime Report
+#        body: "{{ lookup('file', '{{output_file}}') }}"
+#      run_once: yes
+#      delegate_to: localhost
 
     - name: Clean Up Files
       file:
